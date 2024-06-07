@@ -1,13 +1,13 @@
 package com.sonic2423.neoforwarding;
 
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import static com.sonic2423.neoforwarding.NeoForwarding.LOGGER;
 
-@Mod.EventBusSubscriber(modid = NeoForwarding.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = NeoForwarding.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class Config {
     public static boolean enableForwarding;
     public static String forwardingSecret;
