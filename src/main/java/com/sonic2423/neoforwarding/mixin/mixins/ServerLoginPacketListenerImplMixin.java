@@ -95,7 +95,7 @@ public abstract class ServerLoginPacketListenerImplMixin implements ServerLoginP
             }
 
             ISetAddressInConnection setAddressMixin = (ISetAddressInConnection) this.connection;
-            setAddressMixin.neoproxy$setAddress(new java.net.InetSocketAddress(PlayerDataForwarding.readAddress(buf), port));
+            setAddressMixin.neoforwarding$setAddress(new java.net.InetSocketAddress(PlayerDataForwarding.readAddress(buf), port));
 
             startClientVerification(PlayerDataForwarding.createProfile(buf));
 
