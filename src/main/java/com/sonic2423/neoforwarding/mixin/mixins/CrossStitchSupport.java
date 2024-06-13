@@ -25,7 +25,7 @@ public abstract class CrossStitchSupport {
     private static final int MOD_ARGUMENT_INDICATOR = -256;
 
     @Inject(method = "serializeCap(Lnet/minecraft/network/FriendlyByteBuf;Lnet/minecraft/commands/synchronization/ArgumentTypeInfo;Lnet/minecraft/commands/synchronization/ArgumentTypeInfo$Template;)V", at = @At("HEAD"), cancellable = true)
-    private static <A extends ArgumentType<?>, T extends ArgumentTypeInfo.Template<A>> void neoforwarding$wrapInVelocityModArgument(FriendlyByteBuf pBuffer, ArgumentTypeInfo<A, T> pArgumentInfo, ArgumentTypeInfo.Template<A> pArgumentInfoTemplate, CallbackInfo ci) {
+    private static <A extends ArgumentType<?>, T extends ArgumentTypeInfo.Template<A>> void wrapInVelocityModArgument(FriendlyByteBuf pBuffer, ArgumentTypeInfo<A, T> pArgumentInfo, ArgumentTypeInfo.Template<A> pArgumentInfoTemplate, CallbackInfo ci) {
         ResourceLocation key = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getKey(pArgumentInfo);
         int id = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getId(pArgumentInfo);
 

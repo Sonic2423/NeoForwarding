@@ -13,7 +13,7 @@ public abstract class SetAddressInConnection implements ISetAddressInConnection 
     private SocketAddress address;
 
     @Override
-    public void neoproxy$setAddress(SocketAddress address) {
+    public void neoforwarding$setAddress(SocketAddress address) {
         this.address = address;
     }
 }
