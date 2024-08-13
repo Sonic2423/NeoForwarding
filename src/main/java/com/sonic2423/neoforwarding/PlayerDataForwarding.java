@@ -16,8 +16,6 @@ import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static com.sonic2423.neoforwarding.Config.forwardingSecret;
-
 /*
  * The following is ported from "Paper" with slight modifications to work with NeoForge as Mixin.
  * See: https://github.com/PaperMC/Paper/blob/bd5867a96f792f0eb32c1d249bb4bbc1d8338d14/patches/server/0748-Add-Velocity-IP-Forwarding-Support.patch
@@ -41,7 +39,7 @@ public class PlayerDataForwarding {
 
         try {
             final Mac mac = Mac.getInstance("HmacSHA256");
-            mac.init(new SecretKeySpec(forwardingSecret.getBytes(java.nio.charset.StandardCharsets.UTF_8), "HmacSHA256"));
+            mac.init(new SecretKeySpec(Config.forwardingSecret.getBytes(java.nio.charset.StandardCharsets.UTF_8), "HmacSHA256"));
             final byte[] mySignature = mac.doFinal(data);
             if (!MessageDigest.isEqual(signature, mySignature)) {
                 return false;
