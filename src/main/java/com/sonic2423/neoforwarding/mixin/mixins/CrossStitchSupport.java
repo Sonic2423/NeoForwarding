@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import com.sonic2423.neoforwarding.Config;
 
 import static com.sonic2423.neoforwarding.NeoForwarding.LOGGER;
 
@@ -26,6 +27,8 @@ public abstract class CrossStitchSupport {
 
     @Inject(method = "serializeCap(Lnet/minecraft/network/FriendlyByteBuf;Lnet/minecraft/commands/synchronization/ArgumentTypeInfo;Lnet/minecraft/commands/synchronization/ArgumentTypeInfo$Template;)V", at = @At("HEAD"), cancellable = true)
     private static <A extends ArgumentType<?>, T extends ArgumentTypeInfo.Template<A>> void wrapInVelocityModArgument(FriendlyByteBuf pBuffer, ArgumentTypeInfo<A, T> pArgumentInfo, ArgumentTypeInfo.Template<A> pArgumentInfoTemplate, CallbackInfo ci) {
+        if (!Config.enableEmbeddedCrossStitch) return;
+
         ResourceLocation key = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getKey(pArgumentInfo);
         int id = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getId(pArgumentInfo);
 

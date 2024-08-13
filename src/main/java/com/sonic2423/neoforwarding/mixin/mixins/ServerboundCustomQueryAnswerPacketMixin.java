@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import com.sonic2423.neoforwarding.Config;
 
 /*
  * The following is ported from "Paper" with slight modifications to work with NeoForge as Mixin.
@@ -23,6 +24,8 @@ public abstract class ServerboundCustomQueryAnswerPacketMixin {
 
     @Inject(method = "readUnknownPayload", at = @At("HEAD"), cancellable = true)
     private static void onReadPayload(FriendlyByteBuf pBuffer, CallbackInfoReturnable<CustomQueryAnswerPayload> cir) {
+        if(!Config.enableForwarding) return;
+
         FriendlyByteBuf buffer = pBuffer.readNullable((buf2) -> {
             int i = buf2.readableBytes();
             if (i >= 0 && i <= MAX_PAYLOAD_SIZE) {

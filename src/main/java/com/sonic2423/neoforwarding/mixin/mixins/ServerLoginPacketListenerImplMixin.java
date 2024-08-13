@@ -21,8 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
 
-import static com.sonic2423.neoforwarding.NeoForwarding.LOGGER;
-
 /*
  * The following is ported from "Paper" with slight modifications to work with NeoForge as Mixin.
  * See: https://github.com/PaperMC/Paper/blob/bd5867a96f792f0eb32c1d249bb4bbc1d8338d14/patches/server/0748-Add-Velocity-IP-Forwarding-Support.patch
@@ -52,17 +50,17 @@ public abstract class ServerLoginPacketListenerImplMixin implements ServerLoginP
     // using specific injection target because it is very unlikely that something else will inject in this function.
     @Inject(method = "handleHello", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerLoginPacketListenerImpl;startClientVerification(Lcom/mojang/authlib/GameProfile;)V", ordinal = 1), cancellable = true)
     public void handleHello(ServerboundHelloPacket pPacket, CallbackInfo ci) {
-        if (Config.enableForwarding) {
-            this.neoforwarding$velocityLoginMessageId = java.util.concurrent.ThreadLocalRandom.current().nextInt();
-            net.minecraft.network.FriendlyByteBuf buf = new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
-            buf.writeByte(PlayerDataForwarding.MAX_SUPPORTED_FORWARDING_VERSION);
-            net.minecraft.network.protocol.login.ClientboundCustomQueryPacket packet1 =
-                    new net.minecraft.network.protocol.login.ClientboundCustomQueryPacket(
-                            this.neoforwarding$velocityLoginMessageId, new PlayerDataForwarding.VelocityPlayerInfoPayload(buf)
-                    );
-            this.connection.send(packet1);
-            ci.cancel();
-        }
+        if (!Config.enableForwarding) return;
+
+        this.neoforwarding$velocityLoginMessageId = java.util.concurrent.ThreadLocalRandom.current().nextInt();
+        net.minecraft.network.FriendlyByteBuf buf = new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
+        buf.writeByte(PlayerDataForwarding.MAX_SUPPORTED_FORWARDING_VERSION);
+        net.minecraft.network.protocol.login.ClientboundCustomQueryPacket packet1 =
+                new net.minecraft.network.protocol.login.ClientboundCustomQueryPacket(
+                        this.neoforwarding$velocityLoginMessageId, new PlayerDataForwarding.VelocityPlayerInfoPayload(buf)
+                );
+        this.connection.send(packet1);
+        ci.cancel();
     }
 
     @Inject(method = "handleCustomQueryPacket", at = @At("HEAD"), cancellable = true)
