@@ -2,6 +2,7 @@ package com.sonic2423.neoforwarding.mixin.mixins;
 
 import com.mojang.authlib.GameProfile;
 import com.sonic2423.neoforwarding.Config;
+import com.sonic2423.neoforwarding.NeoForwarding;
 import com.sonic2423.neoforwarding.PlayerDataForwarding;
 import com.sonic2423.neoforwarding.mixin.ISetAddressInConnection;
 import net.minecraft.network.Connection;
@@ -97,7 +98,7 @@ public abstract class ServerLoginPacketListenerImplMixin implements ServerLoginP
 
             startClientVerification(PlayerDataForwarding.createProfile(buf));
 
-            LOGGER.info("UUID of player {} is {}", this.authenticatedProfile.getName(), this.authenticatedProfile.getId());
+            NeoForwarding.LOGGER.info("UUID of player {} is {}", this.authenticatedProfile.getName(), this.authenticatedProfile.getId());
 
             ci.cancel();
         }
