@@ -77,7 +77,7 @@ public class PlayerDataForwarding {
 
         @Override
         public void write(final FriendlyByteBuf buf) {
-            buf.writeBytes(this.buffer);
+            buf.writeBytes(this.buffer, buf.readerIndex(), buf.readableBytes());
         }
 
         @Override
@@ -90,7 +90,7 @@ public class PlayerDataForwarding {
 
         @Override
         public void write(final FriendlyByteBuf buf) {
-            buf.writeBytes(this.buffer);
+            buf.writeBytes(this.buffer, buf.readerIndex(), buf.readableBytes());
         }
     }
 }
