@@ -71,13 +71,13 @@ public class PlayerDataForwarding {
         }
     }
 
-    public record VelocityPlayerInfoPayload(FriendlyByteBuf buffer) implements CustomQueryPayload {
+    public record VelocityMaxVersionPayload(byte maxVersion) implements CustomQueryPayload {
 
         public static final ResourceLocation id = PLAYER_INFO_CHANNEL;
 
         @Override
         public void write(final FriendlyByteBuf buf) {
-            buf.writeBytes(this.buffer);
+            buf.writeByte(this.maxVersion);
         }
 
         @Override
@@ -86,11 +86,16 @@ public class PlayerDataForwarding {
         }
     }
 
-    public record QueryAnswerPayload(FriendlyByteBuf buffer) implements CustomQueryAnswerPayload {
+    public record VelocityPlayerDataAnswerPayload(FriendlyByteBuf buffer) implements CustomQueryAnswerPayload {
 
         @Override
         public void write(final FriendlyByteBuf buf) {
-            buf.writeBytes(this.buffer);
+            /*
+             never written
+             this record is just used to store the received data from Velocity
+             containing the signature and player information.
+             see ServerLoginPacketListenerImpl.onHandleCustomQueryPacket
+            */
         }
     }
 }
