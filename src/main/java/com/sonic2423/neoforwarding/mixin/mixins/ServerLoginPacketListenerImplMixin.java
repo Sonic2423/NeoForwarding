@@ -67,6 +67,8 @@ public abstract class ServerLoginPacketListenerImplMixin implements ServerLoginP
     private void onHandleCustomQueryPacket(ServerboundCustomQueryAnswerPacket packet, CallbackInfo ci) {
         if (Config.enableForwarding && packet.transactionId() == this.neoforwarding$velocityLoginMessageId) {
 
+            ci.cancel();
+
             if (packet.payload() == null) {
                 this.disconnect(Component.literal("This server requires you to connect with Velocity."));
                 return;
@@ -98,8 +100,6 @@ public abstract class ServerLoginPacketListenerImplMixin implements ServerLoginP
             startClientVerification(PlayerDataForwarding.createProfile(buf));
 
             NeoForwarding.LOGGER.info("UUID of player {} is {}", this.authenticatedProfile.getName(), this.authenticatedProfile.getId());
-
-            ci.cancel();
         }
     }
 }
