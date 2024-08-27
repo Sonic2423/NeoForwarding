@@ -35,7 +35,7 @@ public abstract class ServerboundCustomQueryAnswerPacketMixin {
             }
         });
 
-        cir.setReturnValue(buffer == null ? null : new PlayerDataForwarding.QueryAnswerPayload(buffer));
+        cir.setReturnValue(buffer == null ? null : new PlayerDataForwarding.VelocityPlayerDataAnswerPayload(buffer));
         cir.cancel();
     }
 }

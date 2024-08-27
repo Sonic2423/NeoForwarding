@@ -54,11 +54,10 @@ public abstract class ServerLoginPacketListenerImplMixin implements ServerLoginP
         if (!Config.enableForwarding) return;
 
         this.neoforwarding$velocityLoginMessageId = java.util.concurrent.ThreadLocalRandom.current().nextInt();
-        net.minecraft.network.FriendlyByteBuf buf = new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
-        buf.writeByte(PlayerDataForwarding.MAX_SUPPORTED_FORWARDING_VERSION);
         net.minecraft.network.protocol.login.ClientboundCustomQueryPacket packet1 =
                 new net.minecraft.network.protocol.login.ClientboundCustomQueryPacket(
-                        this.neoforwarding$velocityLoginMessageId, new PlayerDataForwarding.VelocityPlayerInfoPayload(buf)
+                        this.neoforwarding$velocityLoginMessageId,
+                        new PlayerDataForwarding.VelocityMaxVersionPayload(PlayerDataForwarding.MAX_SUPPORTED_FORWARDING_VERSION)
                 );
         this.connection.send(packet1);
         ci.cancel();
@@ -73,7 +72,7 @@ public abstract class ServerLoginPacketListenerImplMixin implements ServerLoginP
                 return;
             }
 
-            PlayerDataForwarding.QueryAnswerPayload payload = (PlayerDataForwarding.QueryAnswerPayload) packet.payload();
+            PlayerDataForwarding.VelocityPlayerDataAnswerPayload payload = (PlayerDataForwarding.VelocityPlayerDataAnswerPayload) packet.payload();
 
             net.minecraft.network.FriendlyByteBuf buf = payload.buffer();
 
