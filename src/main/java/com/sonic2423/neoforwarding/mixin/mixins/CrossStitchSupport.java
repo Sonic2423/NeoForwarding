@@ -6,6 +6,7 @@ import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.registries.RegistryManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,7 +33,7 @@ public abstract class CrossStitchSupport {
         ResourceLocation key = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getKey(pArgumentInfo);
         int id = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getId(pArgumentInfo);
 
-        if (key == null || key.getNamespace().equals("brigadier") || (key.getNamespace().equals("minecraft") && !key.getPath().equals("test_argument") && !key.getPath().equals("test_class"))) {
+        if (key == null || neoforwarding$isVanillaRegistry(key)) {
             return;
         }
 
@@ -54,6 +55,12 @@ public abstract class CrossStitchSupport {
 
         pBuffer.writeVarInt(extraData.readableBytes());
         pBuffer.writeBytes(extraData);
+    }
+
+    @Unique
+    private static boolean neoforwarding$isVanillaRegistry(ResourceLocation location) {
+        // Checks if the registry name is contained within the static view of VanillaRegistries
+        return RegistryManager.getVanillaRegistryKeys().contains(location);
     }
 }
 
