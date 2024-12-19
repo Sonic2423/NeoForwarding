@@ -20,6 +20,6 @@ public class NeoForwarding {
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public NeoForwarding(IEventBus modEventBus, ModContainer modContainer) {
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        modContainer.registerConfig(ModConfig.Type.SERVER, Config.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC, "neoforwarding-server.toml");
     }
 }
