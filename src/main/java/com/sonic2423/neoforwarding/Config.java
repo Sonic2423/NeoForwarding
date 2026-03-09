@@ -7,7 +7,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 import static com.sonic2423.neoforwarding.NeoForwarding.LOGGER;
 
-@EventBusSubscriber(modid = NeoForwarding.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = NeoForwarding.MODID)
 public class Config {
 
     public static boolean enableForwarding;

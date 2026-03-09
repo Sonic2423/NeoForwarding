@@ -99,7 +99,7 @@ public abstract class ServerLoginPacketListenerImplMixin implements ServerLoginP
 
             startClientVerification(PlayerDataForwarding.createProfile(buf));
 
-            NeoForwarding.LOGGER.info("UUID of player {} is {}", this.authenticatedProfile.getName(), this.authenticatedProfile.getId());
+            NeoForwarding.LOGGER.info("UUID of player {} is {}", this.authenticatedProfile.name(), this.authenticatedProfile.id());
         }
     }
 }

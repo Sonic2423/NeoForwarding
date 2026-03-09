@@ -38,7 +38,7 @@ displayName="${mod_name}" #mandatory
 #logoFile="examplemod.png" #optional
 
 # A text field displayed in the mod UI
-#credits="" #optional
+credits="9e_Docteur" #optional
 
 # A text field displayed in the mod UI
 authors="${mod_authors}" #optional

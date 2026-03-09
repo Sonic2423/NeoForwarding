@@ -6,7 +6,7 @@ import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.RegistryManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -31,7 +31,7 @@ public abstract class CrossStitchSupport {
     private static <A extends ArgumentType<?>, T extends ArgumentTypeInfo.Template<A>> void wrapInVelocityModArgument(FriendlyByteBuf pBuffer, ArgumentTypeInfo<A, T> pArgumentInfo, ArgumentTypeInfo.Template<A> pArgumentInfoTemplate, CallbackInfo ci) {
         if (!Config.enableEmbeddedCrossStitch) return;
 
-        ResourceLocation key = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getKey(pArgumentInfo);
+        Identifier key = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getKey(pArgumentInfo);
         int id = BuiltInRegistries.COMMAND_ARGUMENT_TYPE.getId(pArgumentInfo);
 
         if (key == null || neoforwarding$isVanillaRegistry(key)) {
@@ -59,7 +59,7 @@ public abstract class CrossStitchSupport {
     }
 
     @Unique
-    private static boolean neoforwarding$isVanillaRegistry(ResourceLocation location) {
+    private static boolean neoforwarding$isVanillaRegistry(Identifier location) {
         // Checks if the registry name is contained within the static view of VanillaRegistries
         return RegistryManager.getVanillaRegistryKeys().contains(location);
     }
